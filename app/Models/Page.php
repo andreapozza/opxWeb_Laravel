@@ -9,6 +9,8 @@ class Page extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['slug'];
+
     public function pageable()
     {
         return $this->morphTo();

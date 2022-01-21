@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Inertia\Inertia;
 use App\Models\Post;
+use App\Models\Page;
 
 class PostController extends Controller
 {
@@ -31,8 +32,21 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Blog/BlogCreate', [
-            'store_link' => route('cms.posts.store')
+        $empty_post = new Post;
+        $empty_page = new Page;
+        $data = array_combine(
+            $empty_post->getFillable(),
+            array_fill(0, count($empty_post->getFillable()), null)
+        );
+        $empty_post->fill($data);
+        $empty_post->page = array_combine(
+            $empty_page->getFillable(),
+            array_fill(0, count($empty_page->getFillable()), null)
+        );
+        return Inertia::render('Blog/BlogEdit', [
+            'post' => $empty_post->toArray(),
+            'save_link' => route('cms.posts.store'),
+            'method' => 'post'
         ]);
     }
 
@@ -66,10 +80,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::with('page')->find($id)->makeHidden('cms_link');
+        $post = Post::with('page')->find($id);
         return Inertia::render('Blog/BlogEdit', [
             'post' => $post,
-            'update_link' => route('cms.posts.update', [ 'post' => $id ])
+            'save_link' => route('cms.posts.update', [ 'post' => $id ]),
+            'method' => 'put'
         ]);
     }
 
