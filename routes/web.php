@@ -33,7 +33,6 @@ Route::prefix('cms')->group(function() {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/posts/data', [ PostController::class, 'datatable' ])->name('posts.datatable');
     Route::resource('/posts', PostController::class)->names('cms.posts');
 
     Route::resource('/pages', PageController::class)->names('cms.pages');

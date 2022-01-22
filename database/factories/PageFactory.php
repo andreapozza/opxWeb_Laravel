@@ -16,7 +16,7 @@ class PageFactory extends Factory
         return [
             'pageable_type' => 'App\Models\Post',
             'pageable_id' => 1,
-            'slug' => 'prova',
+            'slug' => $this->faker->realTextBetween(10, 20),
             'created_at' => now(),
             'updated_at' => now()
         ];

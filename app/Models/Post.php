@@ -9,7 +9,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'subtitle', 'preview', 'text'];
+    protected $fillable = [
+        'title',
+        'subtitle',
+        'preview',
+        'text',
+        'gallery_id',
+        'author_id'
+    ];
 
     public function page()
     {
@@ -21,15 +28,15 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function getEditLinkAttribute()
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
     {
-        return route('cms.posts.edit', ['post' => $this->id]);
+        static::deleted(function ($post) {
+            $post->page()->delete();
+        });
     }
-
-    public function getShowLinkAttribute()
-    {
-        return route('cms.posts.show', ['post' => $this->id]);
-    }
-
-    // protected $appends = ['edit_link'];
 }

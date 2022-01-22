@@ -20,9 +20,7 @@ class PostSeeder extends Seeder
             User::factory(1)->create();
         }
         Post::factory(30)->afterCreating(function(Post $post) {
-            \App\Models\Page::factory()->create([
-                'pageable_id' => $post->id
-            ]);
+            $post->page()->create(['slug' => $post->title]);
         })->create();
     }
 }

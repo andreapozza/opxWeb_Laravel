@@ -64,8 +64,8 @@
           class="appearance-none w-11/12 inline bg-gray-50 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           :class="[data.page.approved_at ? 'text-gray-700' : 'text-gray-400']"
           type="datetime-local"
-          :value="data.page.approved_at || currentDateTime()"
-          @focus="data.page.approved_at = !data.page.approved_at ? currentDateTime() : data.page.approved_at"
+          :value="getDateTime(data.page.approved_at) || currentDateTime()"
+          @focus="data.page.approved_at = !data.page.approved_at ? currentDateTime() : getDateTime(data.page.approved_at)"
           @change="ev => data.page.approved_at = ev.target.value">
         <button @click.prevent="data.page.approved_at = null" class="w-1/12 align-middle text-5xl text-right inline-block">&times;</button>
         <label v-if="!data.page.expires_at && data.page.approved_at" class="cursor-pointer">
@@ -84,7 +84,8 @@
             class="appearance-none w-11/12 inline bg-gray-50 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             :class="data.page.expires_at === true ? 'text-gray-400' : 'text-gray-700'"
             type="datetime-local"
-            :value="data.page.expires_at || currentDateTime()"
+            :value="getDateTime(data.page.expires_at) || getDateTime(data.page.approved_at)"
+            :min="getDateTime(data.page.approved_at)"
             @change="ev => data.page.expires_at = ev.target.value">
           <button @click.prevent="data.page.expires_at = null" class="w-1/12 align-middle text-5xl text-right inline-block">&times;</button>
         </div>
@@ -120,7 +121,7 @@
               <span v-if="data.page.parent_slug" class="text-gray-500">/{{ data.page.parent_slug }}</span>
             </div>
             <span class="text-gray-500">/</span>
-            <input class="appearance-none flex-1 lg:min-w-0 bg-gray-50 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            <input class="appearance-none flex-1 lg:min-w-0 bg-gray-50 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 pl-0"
               type="text"
               :placeholder="slugify(data.title)"
               @input="ev => data.page.slug = slugify(ev.target.value)"
@@ -170,6 +171,13 @@ import SummernoteEditor from 'vue3-summernote-editor'
 
 const currentDateTime = () => {
   const d = new Date()
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
+  return d.toISOString().slice(0, 16)
+}
+
+const getDateTime = (string) => {
+  if(!string || string === true) return null
+  const d = new Date(string)
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset())
   return d.toISOString().slice(0, 16)
 }
@@ -226,6 +234,7 @@ export default {
       slugify,
       stripHtml,
       currentDateTime,
+      getDateTime,
       checking
     }
   }

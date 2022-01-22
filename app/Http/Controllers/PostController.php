@@ -7,6 +7,8 @@ use Yajra\Datatables\Datatables;
 use Inertia\Inertia;
 use App\Models\Post;
 use App\Models\Page;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -15,13 +17,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $posts = Post::with(['author', 'page'])->get(['id', 'title', 'author_id', 'gallery_id'])->append(['edit_link', 'show_link']);
-        // dd($posts->toArray());
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
+            return $this->datatable($request);
+        }
+        
         return Inertia::render('Blog/BlogIndex', [
-            'create_link' => route('cms.posts.create'),
-            'datatable_link' => route('posts.datatable')
+            'create_link' => route('cms.posts.create')
         ]);
     }
 
@@ -39,6 +42,7 @@ class PostController extends Controller
             array_fill(0, count($empty_post->getFillable()), null)
         );
         $empty_post->fill($data);
+        $empty_post['author_id'] = 1; // default author for the moment :)
         $empty_post->page = array_combine(
             $empty_page->getFillable(),
             array_fill(0, count($empty_page->getFillable()), null)
@@ -58,7 +62,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        return $this->upsert($request);
     }
 
     /**
@@ -97,7 +101,26 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        return $this->upsert($request, $id);
+    }
+
+    /**
+     * Update the specified resource in storage or create a new one.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function upsert(Request $request, $id = null)
+    {
+        DB::transaction(function() use($request, $id) {
+            $post = Post::updateOrCreate(['id' => $id], $request->all());
+            $page = $request->page;
+            $page['slug'] = empty($page['slug']) ? $post->title : $page['slug'];
+            $page['expires_at'] = $page['expires_at'] == 1 ? null : $page['expires_at'];
+            $post->page()->updateOrCreate(['id' => $post->page->id ?? null], $page);
+        });
+        return Redirect::route('cms.posts.index');
     }
 
     /**
@@ -108,7 +131,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+        return Redirect::route('cms.posts.index');
     }
 
     /**
@@ -119,7 +143,7 @@ class PostController extends Controller
      */
     public function datatable(Request $request)
     {
-        if ($request->ajax()) {
+        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             $data = Post::with(['author', 'page'])->get(['id', 'title', 'author_id']);
             return DataTables::of($data)
                 ->addIndexColumn()

@@ -42,7 +42,7 @@ export default {
       timeout = setTimeout(async () => {
         await new DataTable("#myTable").destroy()
         this.datatableInit()
-      }, 500)
+      }, 100)
     })
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
         processing: true,
         stateSave: true,
         serverSide: true,
-        ajax: this.$page.props.datatable_link,
+        ajax: this.$page.url,
         scrollY: isMobile ? "calc(100vh - 32rem)" : "calc(100vh - 20rem)",
         scrollCollapse: !isMobile,
         lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tutti"]],
@@ -84,9 +84,18 @@ export default {
       document.querySelectorAll('a.inertia[href]').forEach(link => {
         link.onclick = e => {
           e.preventDefault();
-          Inertia.visit(link.href)
+          if(link.classList.contains('delete')) {
+            Inertia.delete(link.href, {
+              onFinish: setTimeout(()=>this.datatableDraw(), 100),
+              onBefore: () => confirm('Sicuro di cancellare?')
+            })
+          }
+          else Inertia.visit(link.href)
         }
       })
+    },
+    datatableDraw() {
+      new DataTable("#myTable").draw()
     }
   }
 };
