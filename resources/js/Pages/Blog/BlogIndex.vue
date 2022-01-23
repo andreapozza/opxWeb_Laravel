@@ -86,7 +86,7 @@ export default {
           e.preventDefault();
           if(link.classList.contains('delete')) {
             Inertia.delete(link.href, {
-              onFinish: setTimeout(()=>this.datatableDraw(), 100),
+              onFinish: () => setTimeout(()=>this.datatableDraw(), 100),
               onBefore: () => confirm('Sicuro di cancellare?')
             })
           }

@@ -2,6 +2,7 @@
   <Main :title="'Blog -> ' + ($page.props.method == 'put' ? 'Modifica -> ' + $page.props.post.title : 'Crea')">
     <template #upright>
       <Link
+        as="button"
         v-if="isEditing"
         class="hover:cursor-pointer bg-green-600 hover:bg-green-700 rounded-md px-4 py-2 font-bold shadow text-white text-base inline-flex items-center"
         :href="$page.props.save_link"

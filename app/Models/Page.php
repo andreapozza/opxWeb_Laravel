@@ -37,14 +37,6 @@ class Page extends Model
 
     public function setSlugAttribute($value)
     {
-        /**
-        * if(!value) return '';
-        * return value.toString()
-        * .toLowerCase()
-        * .replace(/[^a-z0-9À-ẑ]/g, '-')
-        * .replace(/[-]{2,}/g, '-')
-        * .replace(/^-|-$/g, '')
-        */
         if(!$value) throw new \Exception('slug can\'t be null');
         $value = strval($value);
         $value = strtolower($value);
@@ -52,5 +44,22 @@ class Page extends Model
         $value = preg_replace('/[-]{2,}/', '-', $value);
         $value = preg_replace('/^-|-$/', '', $value);
         $this->attributes['slug'] = $value;
+    }
+
+    public function setOgTypeAttribute($value)
+    {
+        $accepted = ['website', 'article'];
+        $this->attributes['og_type'] = in_array($value, $accepted) ? $value : $accepted[0];
+    }
+
+    public function setTwitterCardAttribute($value)
+    {
+        $accepted = ['summary', 'summary_large_image', 'app', 'player'];
+        $this->attributes['twitter_card'] = in_array($value, $accepted) ? $value : $accepted[0];
+    }
+
+    public function setShowInMenuAttribute($value)
+    {
+        $this->attributes['show_in_menu'] = isset($value) && $value ? true : false;
     }
 }
