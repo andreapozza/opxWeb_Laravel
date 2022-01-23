@@ -21,12 +21,13 @@
 
   .note-toolbar {
     .note-btn {
-      background-color: #184099de;
-      border-radius: 7px;
-      border-color: unset;
-      color: #fff;
+      background-color: transparent;
+      border-color: transparent;
+      color: rgb(27, 27, 27);
       &:hover,&:focus {
-        background-color: #4b85d1;
+        background-color: #ffffff;
+        border-color: rgba(128, 128, 128, 0.267);
+        border-radius: 5px;
       }
     }
   }
