@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import { slugify, stripHtml } from '../../utils'
+import { slugify, stripHtml } from '@/utils'
 import { ref } from 'vue'
 import 'summernote/dist/summernote-lite.js'
 import 'summernote/dist/summernote-lite.css'

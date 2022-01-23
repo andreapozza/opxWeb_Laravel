@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Main from "../../Shared/Main.vue";
+import Main from "@/Shared/Main.vue";
 import DataTable from "datatables.net-dt";
 import "datatables.net-dt/css/jquery.dataTables.css";
 import { Link } from "@inertiajs/inertia-vue3";
