@@ -84,13 +84,18 @@ export default {
       document.querySelectorAll('a.inertia[href]').forEach(link => {
         link.onclick = e => {
           e.preventDefault();
-          if(link.classList.contains('delete')) {
-            Inertia.delete(link.href, {
-              onFinish: () => setTimeout(()=>this.datatableDraw(), 100),
-              onBefore: () => confirm('Sicuro di cancellare?')
-            })
+          switch(link.dataset.method) {
+            case 'delete':
+              Inertia.delete(link.href, {
+                onFinish: () => setTimeout(()=>this.datatableDraw(), 100),
+                onBefore: () => confirm('Sicuro di cancellare?')
+              })
+              break;
+            case 'get':
+            default:
+              Inertia.visit(link.href);
+              break;
           }
-          else Inertia.visit(link.href)
         }
       })
     },
