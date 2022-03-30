@@ -1,5 +1,5 @@
 <template>
-  <table id="myTable">
+  <table id="myTable" class="display">
     <thead>
       <tr>
         <th v-for="(col, i) of columns" :key="i">{{col.name}}</th>

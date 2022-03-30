@@ -25,13 +25,13 @@ export default {
   data() {
     return {
       columns: [
-        {data: 'id', name: 'id', className: 'dt-body-center', width: '0'},
-        {data: 'title', name: 'title'},
-        {data: 'author.full_name', name: 'author', className: 'dt-body-center'},
-        {data: 'page.approved_at', name: 'approved_at'},
+        {data: 'id', name: 'ID', className: 'dt-body-center', width: '0'},
+        {data: 'title', name: 'Titolo'},
+        {data: 'author.full_name', name: 'Autore', className: 'dt-body-center'},
+        {data: 'page.approved_at', name: 'Approvato il'},
         {
           data: 'action', 
-          name: 'action', 
+          name: 'Azioni', 
           orderable: false, 
           searchable: false
         },
