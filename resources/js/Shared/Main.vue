@@ -9,9 +9,12 @@
       </div>
       <div class="flex flex-wrap max-h-[calc(100vh-9.5rem)] overflow-auto h-full">
           <!-- content -->
-          <div class="w-full p-4 bg-white">
+          <div class="w-full p-4 bg-white pb-16">
             <slot/>
           </div>
+      </div>
+      <div class="w-full fixed bottom-0 h-16 left-0">
+        <slot name="footer"/>
       </div>
     </div>
   </Layout>

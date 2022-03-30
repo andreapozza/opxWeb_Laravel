@@ -1,8 +1,9 @@
 <template>
+<!-- sidebar -->
   <div class="bg-gray-800 shadow-xl h-16 fixed md:relative bottom-0 mt-12 md:mt-0 md:h-screen z-10 w-full overflow-hidden flex-shrink-0"
     :class="{'md:w-48': isSidebarOpen, 'md:w-12': !isSidebarOpen}">
 
-    <div class="md:mt-12 md:w-48 md:absolute md:left-0 md:top-12 content-center md:content-start text-left justify-between">
+    <div class="md:top-16 md:w-48 md:absolute md:left-0 content-center md:content-start text-left justify-between">
       <ul class="list-reset flex flex-row md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left overflow-auto max-h-screen"
         :class="{'md:w-14': !isSidebarOpen}">
         <SidebarItem :isSidebarOpen="isSidebarOpen" text="Dashboard" :icon="['fas', 'tachometer-alt']" link="/cms/dashboard" :active="$page.url == '/cms/dashboard'"/>

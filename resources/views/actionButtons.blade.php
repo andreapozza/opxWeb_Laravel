@@ -2,6 +2,6 @@
   <i class="fas fa-pencil-alt"></i>
 </a>
 
-<a title="Cancella" class="action text-red-700 inertia" data-method="delete" href="{{ route('cms.posts.destroy', ['post' => $row->id]) }}">
+<button title="Cancella" class="action text-red-700 inertia" data-method="delete" href="{{ route('cms.posts.destroy', ['post' => $row->id]) }}">
   <i class="fas fa-trash"></i>
-</a>
+</button>

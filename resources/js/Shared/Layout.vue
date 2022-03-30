@@ -7,22 +7,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import Nav from './Nav.vue';
 import Sidebar from './Sidebar/Sidebar.vue';
 import { ref } from 'vue';
 import { Head } from '@inertiajs/inertia-vue3';
 
-export default {
-  components: { Nav, Sidebar, Head },
-  setup() {
-    const sidebarKey = ref(0)
-    window.addEventListener('resize', () => {
-      sidebarKey.value++
-    })
+const sidebarKey = ref(0)
+window.addEventListener('resize', () => {
+  sidebarKey.value++
+})
 
-    return { sidebarKey }
-  }
-}
 </script>
