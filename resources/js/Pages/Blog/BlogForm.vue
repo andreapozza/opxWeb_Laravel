@@ -30,7 +30,16 @@
     <form class="sm:shadow sm:p-5 -mx-3">
       <div class="w-full px-3 mb-6">
         <Label>Immagine di copertina</Label>
-        <input v-if="!data.page.cover_id" type="file" accept="image/*" />
+        <div class="bg-white border rounded p-2 max-w-[185px]">
+          <div class="bg-neutral-300 overflow-hidden block m-auto">
+
+            <!--// TODO: modificare immagine placeholder -->
+
+            <img class="object-cover aspect-square w-full h-full" :src="data.page.cover_id || 'https://via.placeholder.com/1000?text=%20'">
+            
+          </div>
+          <button @click.prevent="showImageUploader = true" class="mt-2 w-full justify-center text-ellipsis whitespace-nowrap text-xs bg-slate-600 hover:bg-slate-700 rounded-md px-4 py-2 font-bold shadow text-white inline-flex items-center">Carica immagine</button>
+        </div>
       </div>
       <div class="w-full px-3 mb-6">
         <Label>Gallery</Label>
@@ -146,9 +155,16 @@
     </form>
     <!-- /form -->
   </div>
+
+  <Modal v-if="showImageUploader" @closing="showImageUploader = false" >
+    <img src="https://via.placeholder.com/800" alt="">
+    ciao
+  </Modal>
+
+
 </template>
 
-<script>
+<script setup>
 import { stripHtml } from "@/utils";
 import { ref } from "vue";
 import "summernote/dist/summernote-lite.js";
@@ -160,6 +176,7 @@ import InputText from "@/Shared/Form/InputText.vue";
 import Label from "@/Shared/Form/Label.vue";
 import InputSlug from '@/Shared/Form/InputSlug.vue';
 import Textarea from '@/Shared/Form/Textarea.vue';
+import Modal from '@/Shared/Modal.vue'
 
 const currentDateTime = () => {
   const d = new Date();
@@ -174,60 +191,52 @@ const getDateTime = (string) => {
   return d.toISOString().slice(0, 16);
 };
 
-export default {
-  props: ["data"],
-  components: { SummernoteEditor, InputText, Label, InputSlug, Textarea, },
-  data() {
-    return {
-      isSEOVisible: true,
-      previewConf: {
-        toolbar: [
-          ["font", ["bold", "underline", "strikethrough", "clear"]],
-          ["fontname", ["fontname"]],
-          ["color", ["color"]],
-          ["para", ["ul", "ol", "paragraph"]],
-          ["insert", ["table", "link"]],
-          ["view", ["codeview"]],
-          ["undo", ["undo", "redo"]],
-        ],
-        minHeight: 70,
-        lang: "it-IT",
-      },
-      textConf: {
-        toolbar: [
-          ["style", ["style"]],
-          ["font", ["bold", "underline", "strikethrough", "clear"]],
-          ["fontname", ["fontname"]],
-          ["color", ["color"]],
-          ["para", ["ul", "ol", "paragraph"]],
-          ["insert", ["table", "picture", "video", "link", "hr"]],
-          ["view", ["codeview"]],
-          ["undo", ["undo", "redo"]],
-          ["extra", ["fullscreen"]],
-        ],
-        minHeight: 250,
-        lang: "it-IT",
-        styleTags: [
-          { title: "Paragrafo", tag: "p", value: "p" },
-          { title: "Citazione", tag: "blockquote", value: "blockquote" },
-          { title: "Codice", tag: "pre", value: "pre" },
-          { title: "H2", tag: "h2", value: "h2" },
-          { title: "H3", tag: "h3", value: "h3" },
-          { title: "H4", tag: "h4", value: "h4" },
-          { title: "H5", tag: "h5", value: "h5" },
-          { title: "H6", tag: "h6", value: "h6" },
-        ],
-      },
-    };
-  },
-  setup() {
-    const checking = ref(false);
-    return {
-      stripHtml,
-      currentDateTime,
-      getDateTime,
-      checking,
-    };
-  },
-};
+const props = defineProps({
+  data: {}
+})
+
+const isSEOVisible = ref(false)
+const previewConf = ref({
+  toolbar: [
+    ["font", ["bold", "underline", "strikethrough", "clear"]],
+    ["fontname", ["fontname"]],
+    ["color", ["color"]],
+    ["para", ["ul", "ol", "paragraph"]],
+    ["insert", ["table", "link"]],
+    ["view", ["codeview"]],
+    ["undo", ["undo", "redo"]],
+  ],
+  minHeight: 70,
+  lang: "it-IT",
+})
+
+const textConf = ref({
+  toolbar: [
+    ["style", ["style"]],
+    ["font", ["bold", "underline", "strikethrough", "clear"]],
+    ["fontname", ["fontname"]],
+    ["color", ["color"]],
+    ["para", ["ul", "ol", "paragraph"]],
+    ["insert", ["table", "picture", "video", "link", "hr"]],
+    ["view", ["codeview"]],
+    ["undo", ["undo", "redo"]],
+    ["extra", ["fullscreen"]],
+  ],
+  minHeight: 250,
+  lang: "it-IT",
+  styleTags: [
+    { title: "Paragrafo", tag: "p", value: "p" },
+    { title: "Citazione", tag: "blockquote", value: "blockquote" },
+    { title: "Codice", tag: "pre", value: "pre" },
+    { title: "H2", tag: "h2", value: "h2" },
+    { title: "H3", tag: "h3", value: "h3" },
+    { title: "H4", tag: "h4", value: "h4" },
+    { title: "H5", tag: "h5", value: "h5" },
+    { title: "H6", tag: "h6", value: "h6" },
+  ],
+})
+
+const showImageUploader = ref(false)
+
+const isChecking = ref(false);
 </script>
