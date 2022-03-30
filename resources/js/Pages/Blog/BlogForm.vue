@@ -38,7 +38,7 @@
             <img class="object-cover aspect-square w-full h-full" :src="data.page.cover_id || 'https://via.placeholder.com/1000?text=%20'">
             
           </div>
-          <button @click.prevent="showImageUploader = true" class="mt-2 w-full justify-center text-ellipsis whitespace-nowrap text-xs bg-slate-600 hover:bg-slate-700 rounded-md px-4 py-2 font-bold shadow text-white inline-flex items-center">Carica immagine</button>
+          <button @click.prevent="showImageUploader = true" class="mt-2 w-full justify-center text-ellipsis whitespace-nowrap text-xs bg-slate-600 hover:bg-slate-700 rounded-md px-4 py-2 font-bold shadow text-white inline-flex items-center">Cambia immagine</button>
         </div>
       </div>
       <div class="w-full px-3 mb-6">
