@@ -12,7 +12,9 @@ import {
   faUser,
   faCog,
   faSignOutAlt,
-  faSave } from "@fortawesome/free-solid-svg-icons";
+  faSave,
+  faImage
+} from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -30,6 +32,8 @@ library.add(
   faUser,
   faCog,
   faSignOutAlt,
-  faSave);
+  faSave,
+  faImage
+);
 
 dom.watch() // This will kick of the initial replacement of i to svg tags and configure a MutationObserver

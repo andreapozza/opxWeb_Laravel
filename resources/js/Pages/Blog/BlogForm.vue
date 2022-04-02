@@ -35,7 +35,10 @@
 
             <!--// TODO: modificare immagine placeholder -->
 
-            <img class="object-cover aspect-square w-full h-full" :src="data.page.cover_id || 'https://via.placeholder.com/1000?text=%20'">
+            <img v-if="data.page.cover_id" class="object-cover aspect-square w-full h-full" :src="data.page.cover_id">
+            <div v-else class="w-full aspect-square object-cover grid">
+              <font-awesome-icon :icon="['fas', 'image']" class="text-7xl m-auto"/>
+            </div>
             
           </div>
           <button @click.prevent="showImageUploader = true" class="mt-2 w-full justify-center text-ellipsis whitespace-nowrap text-xs bg-slate-600 hover:bg-slate-700 rounded-md px-4 py-2 font-bold shadow text-white inline-flex items-center">Cambia immagine</button>
@@ -166,13 +169,17 @@
 
 <script setup>
 import { stripHtml } from "@/utils";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import "summernote/dist/summernote-lite.js";
 import "summernote/dist/summernote-lite.css";
 import "@/br.summernote.js";
 import "summernote/dist/lang/summernote-it-IT.js";
 import { SummernoteEditor, InputSlug, InputText, Label, Textarea } from '@/Components/Form/FormComponents'
 import Modal from '@/Components/Modal.vue'
+
+const showImageUploader = ref(false)
+
+const isChecking = ref(false);
 
 const currentDateTime = () => {
   const d = new Date();
@@ -192,7 +199,7 @@ const props = defineProps({
 })
 
 const isSEOVisible = ref(false)
-const previewConf = ref({
+const previewConf = computed(() => ({
   toolbar: [
     ["font", ["bold", "underline", "strikethrough", "clear"]],
     ["fontname", ["fontname"]],
@@ -204,7 +211,8 @@ const previewConf = ref({
   ],
   minHeight: 70,
   lang: "it-IT",
-})
+  disableDragAndDrop: !showImageUploader.value
+}))
 
 const textConf = ref({
   toolbar: [
@@ -230,9 +238,7 @@ const textConf = ref({
     { title: "H5", tag: "h5", value: "h5" },
     { title: "H6", tag: "h6", value: "h6" },
   ],
+  disableDragAndDrop: !showImageUploader.value
 })
 
-const showImageUploader = ref(false)
-
-const isChecking = ref(false);
 </script>
