@@ -34,7 +34,7 @@
 
 <script>
 import { slugify } from '@/utils';
-import Label from '@/Shared/Form/Label.vue';
+import Label from '@/Components/Form/Label.vue';
 
 export default {
   components: { Label },

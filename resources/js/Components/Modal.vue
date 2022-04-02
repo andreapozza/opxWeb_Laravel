@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import Backdrop from '@/Shared/Backdrop.vue';
+import Backdrop from '@/Components/Backdrop.vue';
 import{ ref } from 'vue';
 
 const props = defineProps({

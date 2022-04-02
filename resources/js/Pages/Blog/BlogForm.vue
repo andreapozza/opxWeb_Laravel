@@ -171,12 +171,8 @@ import "summernote/dist/summernote-lite.js";
 import "summernote/dist/summernote-lite.css";
 import "@/br.summernote.js";
 import "summernote/dist/lang/summernote-it-IT.js";
-import SummernoteEditor from "vue3-summernote-editor";
-import InputText from "@/Shared/Form/InputText.vue";
-import Label from "@/Shared/Form/Label.vue";
-import InputSlug from '@/Shared/Form/InputSlug.vue';
-import Textarea from '@/Shared/Form/Textarea.vue';
-import Modal from '@/Shared/Modal.vue'
+import { SummernoteEditor, InputSlug, InputText, Label, Textarea } from '@/Components/Form/FormComponents'
+import Modal from '@/Components/Modal.vue'
 
 const currentDateTime = () => {
   const d = new Date();

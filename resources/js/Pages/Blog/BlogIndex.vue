@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import Main from "@/Shared/Main.vue";
+import Main from "@/Components/Main.vue";
 import "datatables.net-dt/css/jquery.dataTables.css";
 import { Link } from "@inertiajs/inertia-vue3";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import Datatable from '@/Shared/Datatable/Datatable.vue';
+import Datatable from '@/Components/Datatable/Datatable.vue';
 
 export default {
   components: { Main, Link, FontAwesomeIcon, Datatable },

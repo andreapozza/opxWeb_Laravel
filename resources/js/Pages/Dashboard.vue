@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Main from '@/Shared/Main.vue'
+import Main from '@/Components/Main.vue'
 export default {
     components: { Main }
 }

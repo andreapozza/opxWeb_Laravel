@@ -3,7 +3,7 @@ require('./bootstrap');
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import PreCustom from './Shared/PreCustom.vue';
+import PreCustom from './Components/PreCustom.vue';
 import { InertiaProgress } from '@inertiajs/progress'
 
 InertiaProgress.init({

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Label from '@/Shared/Form/Label.vue'
+import Label from '@/Components/Form/Label.vue'
 export default {
   components: { Label },
   props: {

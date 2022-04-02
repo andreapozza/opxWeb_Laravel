@@ -31,7 +31,7 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue3'
-import Main from '@/Shared/Main.vue'
+import Main from '@/Components/Main.vue'
 import Form from './BlogForm.vue'
 
 export default {

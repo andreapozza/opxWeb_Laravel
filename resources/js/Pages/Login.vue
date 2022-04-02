@@ -1,3 +1,3 @@
 <template>
   
-</template>../Shared/Sidebar/Sidebar.vue
+</template>../Components/Sidebar/Sidebar.vue
