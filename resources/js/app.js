@@ -20,6 +20,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .component("font-awesome-icon", FontAwesomeIcon)
       .component("pre-custom", PreCustom)
+      .mixin(require('./translation'))
       .use(plugin)
       .mount(el)
   },

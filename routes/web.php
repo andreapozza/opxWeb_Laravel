@@ -5,8 +5,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +21,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('cms')->group(function() {
+Route::get('setlocale/{locale}',function($locale){
+    session(['locale' => $locale]);
+    return redirect()->back();
+})->name('setLocale');
 
+
+Route::prefix('cms')->group(function() {
+    
     Route::get('/', function() {
         return redirect()->route('dashboard');
     });
-
+    
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
