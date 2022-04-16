@@ -1,5 +1,5 @@
 <template>
-  <table id="myTable" class="display">
+  <table :id="tableId" class="display">
     <thead>
       <tr>
         <th v-for="(col, i) of columns" :key="i">{{col.name}}</th>
@@ -22,6 +22,36 @@ export default defineComponent({
       required: true
     },
   },
+  data() {
+    return {
+      isMobile: window.innerWidth <= 768,
+      tableId: 'myTable' + Math.floor(Math.random() * 1000)
+    }
+  },
+  computed: {
+    defConfig() {
+      return({
+        processing: true,
+        stateSave: true,
+        serverSide: true,
+        ajax: this.$page.url,
+        scrollY: this.isMobile ? "calc(100vh - 36rem)" : "calc(100vh - 20rem)",
+        scrollCollapse: !this.isMobile,
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tutti"]],
+        autoWidth: true,
+        ordering: true,
+        order: [[0, "desc"]],
+        scrollX: this.isMobile,
+        language: {
+          ...require('../../i18n/it_it.json')
+        },
+        columns: this.columns,
+        drawCallback: () => {
+          this.setInertiaLinks()
+        }
+      })
+    }
+  },
   methods: {
     setInertiaLinks() {
       document.querySelectorAll('.inertia[href]').forEach(link => {
@@ -43,50 +73,25 @@ export default defineComponent({
       })
     },
 
-    datatableDraw() {
-      new DataTable("#myTable").draw()
+    async datatableRedraw() {
+      this.isMobile = window.innerWidth <= 768
+      await new DataTable('#'+this.tableId).destroy()
+      this.datatableInit()
     },
 
     datatableInit() {
-      console.log(this.isMobile())
-      const config = this.config || {
-        processing: true,
-        stateSave: true,
-        serverSide: true,
-        ajax: this.$page.url,
-        scrollY: this.isMobile() ? "calc(100vh - 32rem)" : "calc(100vh - 20rem)",
-        scrollCollapse: !this.isMobile(),
-        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tutti"]],
-        autoWidth: true,
-        ordering: true,
-        order: [[0, "desc"]],
-        scrollX: this.isMobile(),
-        language: {
-          ...require('../../i18n/it_it.json')
-        },
-        columns: this.columns,
-        drawCallback: () => {
-          this.setInertiaLinks()
-        }
-      }
-      new DataTable("#myTable", config)
+      const config = Object.assign(this.defConfig, this.config)
+      new DataTable('#'+this.tableId, config)
     },
 
-    isMobile() {
-      return window.innerWidth <= 768
-    },
+    
   },
   mounted() {
     this.datatableInit()
     let timeout
     window.addEventListener('resize', () => {
       clearTimeout(timeout)
-      timeout = setTimeout(async () => {
-        await new DataTable("#myTable").destroy()
-        this.datatableInit()
-        
-        // this.datatableDraw()
-      }, 100)
+      timeout = setTimeout(() => this.datatableRedraw(), 100)
     })
   }
   

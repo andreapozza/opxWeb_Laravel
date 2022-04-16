@@ -22,8 +22,16 @@ class PostController extends Controller
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
             return $this->datatable();
         }
-        
-        return Inertia::render('Blog/BlogIndex');
+
+
+        $columns = [
+            ['data' => 'id', 'name' => 'ID', 'className' => 'dt-body-center', 'width' => 0],
+            ['data' => 'title', 'name' => 'Titolo'],
+            ['data' => 'author.full_name', 'name' => 'Autore', 'className' => 'dt-body-center'],
+            ['data' => 'page.approved_at', 'name' => 'Approvato il'],
+            ['data' => 'action', 'name' => 'Azioni', 'orderable' => false, 'searchable' => false],
+        ];
+        return Inertia::render('Blog/BlogIndex', compact('columns'));
     }
 
     /**

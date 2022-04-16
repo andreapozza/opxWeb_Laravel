@@ -22,21 +22,6 @@ import Datatable from '@/Components/Datatable/Datatable.vue';
 
 export default {
   components: { Main, Link, FontAwesomeIcon, Datatable },
-  data() {
-    return {
-      columns: [
-        {data: 'id', name: 'ID', className: 'dt-body-center', width: '0'},
-        {data: 'title', name: 'Titolo'},
-        {data: 'author.full_name', name: 'Autore', className: 'dt-body-center'},
-        {data: 'page.approved_at', name: 'Approvato il'},
-        {
-          data: 'action', 
-          name: 'Azioni', 
-          orderable: false, 
-          searchable: false
-        },
-      ],
-    }
-  },
+  props: ['columns'],
 };
 </script>
