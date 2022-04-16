@@ -1,5 +1,5 @@
 <template>
-    <Main title="Pagine">
+    <Main :title="__('Pages')">
         contenuto
     </Main>
 </template>

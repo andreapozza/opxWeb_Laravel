@@ -1,6 +1,5 @@
 {
   "Page": "Pagina",
   "Pages": "Pagine",
-  ":num Page": ":num Pagina",
-  ":num Pages": ":num Pagine"
+  ":num Page|:num Pages": ":num Pagina|:num Pagine"
 }
