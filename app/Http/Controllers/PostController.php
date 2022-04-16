@@ -143,15 +143,14 @@ class PostController extends Controller
      */
     public function datatable(Request $request)
     {
-        if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
-            $data = Post::with(['author', 'page'])->get(['id', 'title', 'author_id']);
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    return view('actionButtons', compact('row'));
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+        $data = Post::with(['author', 'page'])->get(['id', 'title', 'author_id']);
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function($row){
+                return view('buttons.edit', compact('row')) . 
+                    view('buttons.delete', compact('row'));
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }
