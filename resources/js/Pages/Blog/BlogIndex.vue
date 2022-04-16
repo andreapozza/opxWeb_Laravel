@@ -3,7 +3,7 @@
     <template #upright>
       <Link
         class="hover:cursor-pointer bg-green-600 hover:bg-green-700 rounded-md px-4 py-2 font-bold shadow text-white text-base inline-flex items-center"
-        :href="$page.props.create_link" >
+        :href="route('cms.posts.create')" >
         <font-awesome-icon class="fill-current w-4 h-4 mr-2" :icon="['fas', 'plus']" />
         <span>Nuovo</span>
       </Link>

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import PreCustom from './Components/PreCustom.vue';
 import { InertiaProgress } from '@inertiajs/progress'
 import Layout from '@/Components/Layout.vue'
+import { ZiggyVue } from 'ziggy'
 
 InertiaProgress.init({
   delay: 250,
@@ -26,6 +27,7 @@ createInertiaApp({
       .component("font-awesome-icon", FontAwesomeIcon)
       .component("pre-custom", PreCustom)
       .mixin(require('./translation'))
+      .use(ZiggyVue)
       .use(plugin)
       .mount(el)
   },

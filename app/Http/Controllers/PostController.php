@@ -20,12 +20,10 @@ class PostController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax() && !$request->hasHeader('X-Inertia')) {
-            return $this->datatable($request);
+            return $this->datatable();
         }
         
-        return Inertia::render('Blog/BlogIndex', [
-            'create_link' => route('cms.posts.create')
-        ]);
+        return Inertia::render('Blog/BlogIndex');
     }
 
     /**
@@ -138,17 +136,17 @@ class PostController extends Controller
     /**
      * Return JSON data for yajira datatable.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function datatable(Request $request)
+    public function datatable()
     {
         $data = Post::with(['author', 'page'])->get(['id', 'title', 'author_id']);
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                return view('buttons.edit', compact('row')) . 
-                    view('buttons.delete', compact('row'));
+                return array_reduce(['edit', 'delete'], 
+                    fn($carry, $btn)  => $carry . view('buttons.'.$btn, ['row' => $row])
+                );
             })
             ->rawColumns(['action'])
             ->make(true);

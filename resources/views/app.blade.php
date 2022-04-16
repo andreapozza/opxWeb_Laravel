@@ -10,6 +10,7 @@
     <script src="{{ mix('/js/app.js') }}" defer></script>
   </head>
   <body class="bg-amber-600 font-sans leading-normal tracking-normal">
+    @routes
     @inertia
 
     @if (app()->isLocal())

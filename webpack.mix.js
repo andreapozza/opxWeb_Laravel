@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,7 +15,8 @@ mix.disableSuccessNotifications();
 
 mix.js('resources/js/app.js', 'public/js')
     .alias({
-        '@': 'resources/js'
+        '@': 'resources/js',
+        'ziggy': 'vendor/tightenco/ziggy/dist/vue'
     })
     .vue()
     .postCss('resources/css/app.css', 'public/css', [
