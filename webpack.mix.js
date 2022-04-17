@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,16 +12,17 @@ const mix = require('laravel-mix');
  */
 
 
-mix.disableSuccessNotifications();
+ mix.disableSuccessNotifications();
 
-mix.js('resources/js/app.js', 'public/js')
-    .alias({
-        '@': 'resources/js',
-        'ziggy': 'vendor/tightenco/ziggy/dist/vue'
-    })
-    .vue()
+ mix.js('resources/js/app.js', 'public/js')
+     .alias({
+         '@': 'resources/js',
+         'ziggy': 'vendor/tightenco/ziggy/dist/vue'
+     })
+     .vue()
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
+        require('postcss-import'),
     ])
     .sass('resources/scss/app.scss', 'public/css')
     .sourceMaps();
@@ -29,3 +31,7 @@ mix.browserSync({
     proxy: 'localhost:8000',
     open: false
 });
+
+if (mix.inProduction()) {
+    mix.version();
+}

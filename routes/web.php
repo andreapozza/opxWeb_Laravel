@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,6 +20,12 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return view('welcome');
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
 });
 
 Route::get('setlocale/{locale}',function($locale){
@@ -34,7 +41,7 @@ Route::prefix('cms')->group(function() {
     });
     
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard2');
     })->name('dashboard');
 
     Route::resource('/posts', PostController::class)->names('cms.posts');
@@ -48,6 +55,11 @@ Route::prefix('cms')->group(function() {
     Route::resource('/users', UserController::class)->names('cms.users');
 
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
+
 
 // include base_path('override/routes/web.php');
 
