@@ -27,7 +27,7 @@ class PostController extends Controller
         $columns = [
             ['data' => 'id', 'name' => 'ID', 'className' => 'dt-body-center', 'width' => 0],
             ['data' => 'title', 'name' => 'Titolo'],
-            ['data' => 'author.full_name', 'name' => 'Autore', 'className' => 'dt-body-center'],
+            ['data' => 'author.name', 'name' => 'Autore', 'className' => 'dt-body-center'],
             ['data' => 'page.approved_at', 'name' => 'Approvato il'],
             ['data' => 'action', 'name' => 'Azioni', 'orderable' => false, 'searchable' => false],
         ];
