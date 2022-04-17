@@ -29,22 +29,16 @@
   </Main>
 </template>
 
-<script>
-import { Link } from '@inertiajs/inertia-vue3'
+<script setup>
+import { Link, usePage, useForm } from '@inertiajs/inertia-vue3'
 import Main from '@/Components/Main.vue'
 import Form from './BlogForm.vue'
+import { computed, ref, watch } from 'vue'
 
-export default {
-  components: { Main, Form, Link },
-  data() {
-    return {
-      data: JSON.parse(JSON.stringify(this.$page.props.post))
-    }
-  },
-  computed: {
-    isEditing() {
-      return JSON.stringify(this.data) != JSON.stringify(this.$page.props.post)
-    }
-  },
-}
+
+const data = ref(JSON.parse(JSON.stringify(usePage().props.value.post)))
+const inertiaForm = computed(() => useForm(data.value))
+const isEditing = computed(() => JSON.stringify(data.value) != JSON.stringify(usePage().props.value.post))
+    
+// TODO: invia form da qui?
 </script>
