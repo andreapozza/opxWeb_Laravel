@@ -33,3 +33,11 @@
   }
 
 }
+
+.dataTables_wrapper {  
+  .dataTables_length {
+    select {
+      padding-right: 2.5rem!important;
+    }
+  }
+}
