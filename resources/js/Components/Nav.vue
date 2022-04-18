@@ -21,32 +21,49 @@
       <div class="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">
         <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
           <li class="flex-1 md:flex-none md:mr-3">
-            <a class="inline-block py-2 px-4 text-white no-underline" href="#">Active</a>
-          </li>
-          <li class="flex-1 md:flex-none md:mr-3">
-            <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">link</a>
-          </li>
-          <li class="flex-1 md:flex-none md:mr-3">
-            <div class="relative inline-block">
-                <button
-                  @mouseleave="showDropdown = false"
-                  @click="showDropdown = !showDropdown" 
-                  class="drop-button text-white focus:outline-none"> 
-                  Hi, User 
-                  <svg class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </button>
-                <div
-                  @mouseover="showDropdown = true"
-                  @mouseleave="showDropdown = false"
-                  class="dropdownlist absolute bg-gray-800 text-white right-0 pt-6 overflow-auto z-30 -mr-3"
-                  :class="{invisible: !showDropdown}">
-                  <a href="#" class="py-3 px-6 hover:bg-gray-700 text-white text-sm no-underline hover:no-underline flex gap-3"><i class="fas fa-user"></i> Profile</a>
-                  <a href="#" class="py-3 px-6 hover:bg-gray-700 text-white text-sm no-underline hover:no-underline flex gap-3"><i class="fa fa-cog"></i> Settings</a>
-                  <div class="mx-3 border border-gray-200"></div>
-                  <a href="#" class="py-3 px-6 hover:bg-gray-700 text-white text-sm no-underline hover:no-underline flex gap-3"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-                </div>
+            <!-- Settings Dropdown -->
+            <div class="ml-3 relative">
+              <jet-dropdown align="right" width="48">
+                <template #trigger>
+                  <div class="flex">
+                    <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                      <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" />
+                    </button>
+                    
+                    <span class="inline-flex rounded-md">
+                      <button type="button" class="inline-flex items-center px-3 border border-transparent leading-4 font-medium rounded-md text-gray-400  hover:text-gray-200 focus:text-gray-200 focus:outline-none transition">
+                        {{ $page.props.user.name }}
+                    
+                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                    </span>
+                  </div>
+                </template>
+
+                <template #content>
+                  <!-- Account Management -->
+                  <div class="block px-4 py-2 text-xs text-gray-400">
+                    {{ __('Manage Account') }}
+                  </div>
+
+                  <jet-dropdown-link :href="route('profile.show')">
+                    {{ __('Profile') }}
+                  </jet-dropdown-link>
+
+                  <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
+                    {{ __('API Tokens') }}
+                  </jet-dropdown-link>
+
+                  <div class="border-t border-gray-100"></div>
+
+                  <!-- Authentication -->
+                  <jet-dropdown-link as="button" @click="$inertia.post(route('logout'), {onProgress: () => console.log(1) })">
+                    {{ __('Log Out') }}
+                  </jet-dropdown-link>
+                </template>
+              </jet-dropdown>
             </div>
           </li>
         </ul>
@@ -56,11 +73,16 @@
 </template>
 
 <script>
+import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
+import JetDropdown from '@/Jetstream/Dropdown.vue'
+import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
+import { Link } from '@inertiajs/inertia-vue3'
 export default {
   data() {
     return {
       showDropdown: false,
     }
-  }
+  },
+  components: { JetDropdownLink, JetResponsiveNavLink, JetDropdown, Link }
 }
 </script>

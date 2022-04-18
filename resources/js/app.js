@@ -18,10 +18,12 @@ import './font-awesome-icons'
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
-    title: title => `${title} - ${appName}`,
+    title: title => `${title} | ${appName}`,
     resolve: name => {
         const page = require(`./Pages/${name}.vue`).default
-        page.layout = page.layout || Layout
+        if(!name.startsWith('Auth/')) {
+            page.layout = page.layout || Layout
+        }
         return page
       },
     setup({ el, App, props, plugin }) {
@@ -29,8 +31,8 @@ createInertiaApp({
         .component("font-awesome-icon", FontAwesomeIcon)
         .component("pre-custom", PreCustom)
         .mixin(require('./translation'))
-            .use(plugin)
-            .mixin({ methods: { route } })
-            .mount(el)
+        .use(plugin)
+        .mixin({ methods: { route } })
+        .mount(el)
     },
 })

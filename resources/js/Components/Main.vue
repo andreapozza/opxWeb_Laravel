@@ -8,7 +8,7 @@
       </div>
       <div class="flex flex-wrap max-h-[calc(100vh-9.5rem)] overflow-auto h-full">
           <!-- content -->
-          <div class="w-full p-4 bg-white pb-16">
+          <div class="w-full p-4 pb-16">
             <slot/>
           </div>
       </div>
