@@ -1,5 +1,5 @@
 <template>
-  <Head :title="'OPXweb | ' + $page.props.appName" />
+  <Head :title="'OPXweb'" />
   <Nav/>
   <div class="flex flex-col md:flex-row">
     <Sidebar :key="sidebarKey"/>
