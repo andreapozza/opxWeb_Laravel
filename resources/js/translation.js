@@ -10,7 +10,7 @@ module.exports = {
        */
       __(key, replace = {}, number) {
         if(undefined !== number) return this.__n(key, number, replace)
-        const keys = key.split('.');
+        const keys = /\s|[.]$/.test(key) ? [key] : key.split('.');
         let translation = this.$page.props.language;
 
         keys.forEach(keyT => {
