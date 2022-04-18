@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 justify-center gap-4" :class="isSEOVisible ? 'md:grid-cols-3' : 'md:grid-cols-4'">
-    <form class="sm:shadow sm:p-5" :class="isSEOVisible ? 'col-span-2' : 'col-span-3'">
+    <form class="sm:p-5" :class="isSEOVisible ? 'col-span-2' : 'col-span-3'">
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3 mb-6">
           <InputText
@@ -27,7 +27,7 @@
       </div>
     </form>
     <!-- /form -->
-    <form class="sm:shadow sm:p-5 -mx-3">
+    <form class="shadow bg-white sm:p-5 rounded-lg -mx-3">
       <div class="w-full px-3 mb-6">
         <Label>Immagine di copertina</Label>
         <div class="bg-white border rounded p-2 max-w-[185px]">
