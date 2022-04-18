@@ -8,7 +8,7 @@
         <span>Nuovo</span>
       </Link>
     </template>
-    <Datatable :columns="columns"/>
+    <Datatable id="myTable" :columns="columns"/>
   </Main>
 </template>
 

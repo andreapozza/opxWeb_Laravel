@@ -1,8 +1,8 @@
 <template>
-  <table :id="tableId" class="display">
+  <table :id="id" class="display">
     <thead>
       <tr>
-        <th v-for="(col, i) of columns" :key="i">{{col.name}}</th>
+        <th v-for="(col, i) of columns" :key="i">{{col.title}}</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -21,11 +21,13 @@ export default defineComponent({
     columns: {
       required: true
     },
+    id: {
+      required: true
+    }
   },
   data() {
     return {
       isMobile: window.innerWidth <= 768,
-      tableId: 'myTable' + Math.floor(Math.random() * 1000)
     }
   },
   computed: {
@@ -60,7 +62,7 @@ export default defineComponent({
           switch(link.dataset.method) {
             case 'delete':
               Inertia.delete(link.attributes.href.value, {
-                onFinish: () => setTimeout(()=>this.datatableDraw(), 100),
+                onFinish: () => setTimeout(()=>this.datatableRedraw(), 100),
                 onBefore: () => confirm('Sicuro di cancellare?')
               })
               break;
@@ -75,13 +77,13 @@ export default defineComponent({
 
     async datatableRedraw() {
       this.isMobile = window.innerWidth <= 768
-      await new DataTable('#'+this.tableId).destroy()
+      await new DataTable('#'+this.id).destroy()
       this.datatableInit()
     },
 
     datatableInit() {
       const config = Object.assign(this.defConfig, this.config)
-      new DataTable('#'+this.tableId, config)
+      new DataTable('#'+this.id, config)
     },
 
     
