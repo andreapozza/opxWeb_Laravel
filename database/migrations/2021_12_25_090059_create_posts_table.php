@@ -19,8 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('subtitle')->nullable();
             $table->text('preview')->nullable();
             $table->text('text');
-            $table->foreignId('gallery_id')->nullable()->references('id')->on('categories');
-            $table->foreignId('author_id')->references('id')->on('users');
+            $table->foreignId('gallery_id')->nullable()->constrained('categories')->nullOnDelete();
+            $table->foreignId('author_id')->constrained('users');
             $table->timestamps();
         });
     }

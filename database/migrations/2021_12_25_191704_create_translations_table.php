@@ -15,7 +15,7 @@ class CreateTranslationsTable extends Migration
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('language_id')->references('id')->on('languages');
+            $table->foreignId('language_id')->constrained();
             $table->text('text');
             $table->morphs('translateable');
             $table->string('column')->default('text');
