@@ -159,9 +159,10 @@
     <!-- /form -->
   </div>
 
-  <Modal v-if="showImageUploader" @closing="showImageUploader = false" >
-    <img src="https://via.placeholder.com/800" alt="">
-    ciao
+  <Modal :show="showImageUploader" @close="showImageUploader = false" >
+    <div class="p-4 min-h-[80vh]">
+      ciao
+    </div>
   </Modal>
 
 
@@ -175,7 +176,7 @@ import "summernote/dist/summernote-lite.css";
 import "@/br.summernote.js";
 import "summernote/dist/lang/summernote-it-IT.js";
 import { SummernoteEditor, InputSlug, InputText, Label, Textarea } from '@/Components/Form/FormComponents'
-import Modal from '@/Components/Modal.vue'
+import Modal from '@/Jetstream/Modal.vue'
 
 const showImageUploader = ref(false)
 
@@ -214,7 +215,7 @@ const previewConf = computed(() => ({
   disableDragAndDrop: !showImageUploader.value
 }))
 
-const textConf = ref({
+const textConf = computed(() => ({
   toolbar: [
     ["style", ["style"]],
     ["font", ["bold", "underline", "strikethrough", "clear"]],
@@ -239,6 +240,6 @@ const textConf = ref({
     { title: "H6", tag: "h6", value: "h6" },
   ],
   disableDragAndDrop: !showImageUploader.value
-})
+}))
 
 </script>
