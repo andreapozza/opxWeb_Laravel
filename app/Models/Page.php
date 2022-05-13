@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -74,5 +75,12 @@ class Page extends Model
             $string = $this->makeSlugUnique($string, $i); 
         }
         return $string;
+    }
+
+    public function getApprovedAtAttribute($value)
+    {
+        if(isset($value)){
+            return Carbon::rawParse($value)->format('d/m/Y H:i');
+        }
     }
 }
